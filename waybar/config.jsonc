@@ -97,7 +97,9 @@
         "spacing": 15
     },
     "clock": {
-        "format": "{: %R   %d/%m}",
+        //"format": "{ :%H:%M   %d/%m}",
+        "format": "{:%H:%M   %d/%m}",
+        "timezone" : "Europe/Stockholm",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
         //"format-alt": "{:%Y-%m-%d}"
     },

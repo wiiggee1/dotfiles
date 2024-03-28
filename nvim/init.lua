@@ -1,7 +1,7 @@
 require("plugins_setup")
 require("core.settings")
 require 'core.colorscheme'
-require("core.autocmds")
+--require("core.autocmds")
 require("plugins.file_explorer_view")
 require("core.shortcuts")
 require("plugins.show_terminal")
@@ -13,7 +13,7 @@ require("plugins.lualine_config")
 require("plugins.autopairs")
 require("plugins.todo_comments")
 --require("plugins.dap_config")
---require("plugins.rust_config")
+require("plugins.rust_config")
 require("custom.smart_window")
 --abc
 

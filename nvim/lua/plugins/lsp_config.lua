@@ -25,6 +25,8 @@ end)
 --lsp-zero.set_sign_icons()
 --vim.diagnostic.config(require('lsp-zero').defaults.diagnostics({}))
 
+require('lspconfig').rust_analyzer.setup({})
+
 lsp_zero.set_sign_icons({
   error = '✘',
   warn = '▲',
@@ -108,20 +110,34 @@ cmp.setup({
         {name = 'luasnip'}, -- snippets
         {name = 'nvim_lua'},
     },
+    view = {
+        entries = "custom",
+        selection_order = "top_down",
+        
+    },
     window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = {
+            border = 'double',
+            
+        },
+        documentation = {
+            border = 'rounded',
+            format = { 
+            }
+        
+            
+        },
     },
     completion = {
         completeopt = "menu, menuone, noselect",
     },
     formatting = {
-        fields = {'kind', 'abbr', 'menu'},
+        fields = {'kind', 'abbr', 'menu'}, 
         format = require('lspkind').cmp_format({
             mode = 'symbol', -- show only symbol annotations
-            maxwidth = 30, -- prevent the popup from showing more than provided characters
+            maxwidth = 20, -- prevent the popup from showing more than provided characters
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-        })
+            })
     },
     snippet = {
         expand = function(args)
