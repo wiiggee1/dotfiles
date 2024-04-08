@@ -4,15 +4,6 @@
 local lsp_zero = require('lsp-zero')
 lsp_zero.preset("recommended")
 
---require('mason').setup()
---require('mason-lspconfig').setup()
---require("mason-nvim-dap").setup()
-
---local get_servers = require('mason-lspconfig').get_installed_servers
---for _, server_name in ipairs(get_servers()) do
---    require('lspconfig')[server_name].setup({})
---end
-
 --TODO: 
 -- * Fix floating "Go to definition" for the current buffer.
 
@@ -22,10 +13,32 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 end)
 
---lsp-zero.set_sign_icons()
---vim.diagnostic.config(require('lsp-zero').defaults.diagnostics({}))
+local lspconfutil = require 'lspconfig/util'
+local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
+
+require('lspconfig').veridian.setup {
+    cmd = { 'veridian' },
+    filetypes = {'systemverilog', 'verilog'},
+    root_dir = root_pattern,
+    single_file_support = true,
+}
+
+require('lspconfig').svlangserver.setup{
+    cmd = { "svlangserver" },
+    filetypes = { "verilog", "systemverilog" },
+    root_dir = require("lspconfig.util").root_pattern("veridian.yml", ".git"),
+    single_file_support = true,
+}
 
 require('lspconfig').rust_analyzer.setup({})
+--require('lspconfig').clangd.setup{}
+
+--require('lspconfig').verible.setup{
+  --  on_attach = lsp_zero.on_attach,
+   -- flags = lsp_flags,
+   -- root_dir = require("lspconfig.util").root_pattern(".git")
+--}
+
 
 lsp_zero.set_sign_icons({
   error = '✘',
@@ -39,8 +52,21 @@ require('mason-lspconfig').setup({
     ensure_installed = {'rust_analyzer', 'clangd', 'lua_ls', 'bashls', 'tsserver'},
     handlers = {
         lsp_zero.default_setup,
+
+        -- look at documentations: https://lsp-zero.netlify.app/v3.x/getting-started.html
+      verible = function()
+            require('lspconfig').verible.setup({
+                on_attach = lsp_zero.on_attach,
+                cmd = { "verible-verilog-ls" },
+                filetypes = { 'systemverilog', 'verilog' },
+                root_dir = require("lspconfig.util").root_pattern(".git"),
+                single_file_support = true,
+            })
+        end,
     },
 })
+
+--autocmd BufWritePost *.v lua vim.lsp.buf.format({ async = false })
 
 vim.diagnostic.config({
   underline = true,
@@ -76,22 +102,6 @@ vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 local cmp = require('cmp')
 --local cmp_config = require('lsp-zero').defaults.cmp_config({})
 
-
--- old 
---cmp_config.mapping = cmp.mapping.preset.insert({
---    ['<C-k>'] = cmp.mapping.select_prev_item(),
---    ['<C-j>'] = cmp.mapping.select_next_item(),
---    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
---    ['<C-f>'] = cmp.mapping.scroll_docs(4),
---    ['<C-Space>'] = cmp.mapping.complete(),
---    ['<C-e>'] = cmp.mapping.close(),
---    ['<CR>'] = cmp.mapping.confirm { select = false }
---})
-
---lsp_zero.setup_nvim_cmp({
---    mapping = cmp_config.mapping
---})
-
 --cmp.setup(cmp_config)
 cmp.setup({
      mapping = cmp.mapping.preset.insert({
@@ -109,11 +119,11 @@ cmp.setup({
         {name = 'path'}, -- file system paths
         {name = 'luasnip'}, -- snippets
         {name = 'nvim_lua'},
+        
     },
     view = {
         entries = "custom",
         selection_order = "top_down",
-        
     },
     window = {
         completion = {
@@ -124,7 +134,6 @@ cmp.setup({
             border = 'rounded',
             format = { 
             }
-        
             
         },
     },
@@ -134,9 +143,23 @@ cmp.setup({
     formatting = {
         fields = {'kind', 'abbr', 'menu'}, 
         format = require('lspkind').cmp_format({
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 20, -- prevent the popup from showing more than provided characters
+            mode = 'symbol_text', -- show only symbol annotations
+            maxwidth = 40, -- prevent the popup from showing more than provided characters
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
+            
+            before = function(entry, vim_item)
+                -- add customization before lspkind
+                
+                vim_item.menu = ({
+                    buffer = "[Buff]",
+                    nvim_lsp = "[LSP]",
+                    luasnip = "[LuaSnip]",
+                    nvim_lua = "[Lua]",
+                    latex_symbols = "[Latex]",
+                })[entry.source.name]
+                return vim_item
+            end
+
             })
     },
     snippet = {

@@ -39,8 +39,8 @@ keybind("n", "<leader>t", ":ToggleTerm<CR>")
 keybind("t", "<C-t>", ("exit<CR>"))
 
 -- Bindings for jumping between "next" and "previous" buffers instead of tabs
-keybind("n", "<leader>bn", ":bnext<CR>")
-keybind("n", "<leader>bp", ":bprevious<CR>")
+keybind("n", "<leader>gn", ":bnext<CR>")
+keybind("n", "<leader>gb", ":bprevious<CR>")
 keybind("n", "<leader>bf", ":bfirst<CR>")
 keybind("n", "<leader>bl", ":blast<CR>") 
 

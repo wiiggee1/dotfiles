@@ -56,6 +56,7 @@ return require('packer').startup(function(use)
     use {"catppuccin/nvim", as = "catppuccin"}
     use 'mfussenegger/nvim-dap'
     use 'mfussenegger/nvim-jdtls'
+    use 'mfussenegger/nvim-lint'
     use 'jay-babu/mason-nvim-dap.nvim'
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
     use 'theHamsta/nvim-dap-virtual-text'
