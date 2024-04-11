@@ -13,10 +13,10 @@ require'nvim-treesitter.configs'.setup {
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
+    use_languagetree = true,
   
   indent = {
       enable = true,
-      disable = {},
     },
 
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.

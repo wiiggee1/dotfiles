@@ -31,7 +31,15 @@ require('lspconfig').svlangserver.setup{
 }
 
 require('lspconfig').rust_analyzer.setup({})
---require('lspconfig').clangd.setup{}
+
+require('lspconfig').clangd.setup{
+    cmd = {
+       "clangd",
+       "--clang-tidy",
+		"--background-index",
+		"--completion-style=detailed",
+    }
+}
 
 --require('lspconfig').verible.setup{
   --  on_attach = lsp_zero.on_attach,
@@ -70,7 +78,7 @@ require('mason-lspconfig').setup({
 
 vim.diagnostic.config({
   underline = true,
-  virtual_text = true,
+  virtual_text = false,
   severity_sort = false,
   float = {
     style = 'minimal',
@@ -157,6 +165,9 @@ cmp.setup({
                     nvim_lua = "[Lua]",
                     latex_symbols = "[Latex]",
                 })[entry.source.name]
+
+                vim_item.dup = { buffer = 1, path = 1, nvim_lsp = 0 }
+
                 return vim_item
             end
 

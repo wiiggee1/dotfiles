@@ -1,16 +1,16 @@
 require("catppuccin").setup({
-    flavour = "macchiato", -- latte, frappe, macchiato, mocha
+    flavour = "mocha", -- latte, frappe, macchiato, mocha
     background = { -- :h background
         light = "latte",
         dark = "mocha",
     },
     transparent_background = true,
     show_end_of_buffer = false,
-    term_colors = false,
+    term_colors = true,
     dim_inactive = {
         enabled = false,
-        shade = "light",
-        percentage = 0.3,
+        shade = "dark",
+        percentage = 0.20,
     },
     no_italic = false, -- Force no italic
     no_bold = false, -- Force no bold
@@ -36,6 +36,7 @@ require("catppuccin").setup({
         gitsigns = true,
         mason = true,
         nvimtree = true,
+        treesitter = true, 
         telescope = true,
         notify = false,
         mini = false,
