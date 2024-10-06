@@ -45,4 +45,4 @@ keybind("n", "<leader>bf", ":bfirst<CR>")
 keybind("n", "<leader>bl", ":blast<CR>") 
 
 -- Testing some new keybindings here: 
-keybind("n", "<leader>do", diagnostic.open_float)
+keybind("n", "<leader>d", diagnostic.open_float)
