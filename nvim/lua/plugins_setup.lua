@@ -77,7 +77,7 @@ return require('packer').startup(function(use)
     use('nvim-lualine/lualine.nvim')
     use('kyazdani42/nvim-web-devicons')  
     use {
-        'nvim-tree/nvim-tree.lua', tag = 'nightly',
+        'nvim-tree/nvim-tree.lua',
         requires = {'nvim-tree/nvim-web-devicons'}
     }
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
