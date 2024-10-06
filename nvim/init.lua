@@ -18,4 +18,3 @@ require("plugins.rust_config")
 require("plugins.linter_config")
 
 
-
