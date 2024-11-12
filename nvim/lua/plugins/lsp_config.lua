@@ -32,6 +32,8 @@ require('lspconfig').svlangserver.setup{
 
 require('lspconfig').rust_analyzer.setup({})
 
+require('lspconfig').lua_ls.setup{}
+
 require('lspconfig').clangd.setup{
     cmd = {
        "clangd",
@@ -40,6 +42,9 @@ require('lspconfig').clangd.setup{
 		"--completion-style=detailed",
     }
 }
+
+--require('java').setup()
+require('lspconfig').jdtls.setup({})
 
 --require('lspconfig').verible.setup{
   --  on_attach = lsp_zero.on_attach,
