@@ -1,20 +1,24 @@
 -- Configure LSP servers
 
---require'lspconfig'.sumneko_lua.setup()
 local lsp_zero = require('lsp-zero')
-lsp_zero.preset("recommended")
+--lsp_zero.preset("recommended")
 
---TODO: 
--- * Fix floating "Go to definition" for the current buffer.
-
-lsp_zero.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp_zero.default_keymaps({buffer = bufnr})
-end)
-
-local lspconfutil = require 'lspconfig/util'
+local lspconfutil = require('lspconfig/util')
 local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local lsp_attach = function(client, bufnr)
+    -- see :help lsp-zero-keybindings
+    -- to learn the available actions
+    lsp_zero.default_keymaps({buffer = bufnr})
+end
+
+lsp_zero.extend_lspconfig({
+  capabilities = require('cmp_nvim_lsp').default_capabilities(),
+  lsp_attach = lsp_attach,
+  float_border = 'rounded',
+  sign_text = true,
+})
 
 require('lspconfig').veridian.setup {
     cmd = { 'veridian' },
@@ -30,7 +34,13 @@ require('lspconfig').svlangserver.setup{
     single_file_support = true,
 }
 
-require('lspconfig').rust_analyzer.setup({})
+require('lspconfig').rust_analyzer.setup({
+    capabilities = capabilities,
+    on_attach = lsp_attach,
+    settings = {
+        ['rust_analyzer'] = {},
+    }
+})
 
 require('lspconfig').lua_ls.setup{}
 
@@ -43,15 +53,7 @@ require('lspconfig').clangd.setup{
     }
 }
 
---require('java').setup()
 require('lspconfig').jdtls.setup({})
-
---require('lspconfig').verible.setup{
-  --  on_attach = lsp_zero.on_attach,
-   -- flags = lsp_flags,
-   -- root_dir = require("lspconfig.util").root_pattern(".git")
---}
-
 
 lsp_zero.set_sign_icons({
   error = '✘',
@@ -59,6 +61,7 @@ lsp_zero.set_sign_icons({
   hint = '⚑',
   info = ''
 })
+
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
@@ -79,8 +82,6 @@ require('mason-lspconfig').setup({
     },
 })
 
---autocmd BufWritePost *.v lua vim.lsp.buf.format({ async = false })
-
 vim.diagnostic.config({
   underline = true,
   virtual_text = false,
@@ -94,10 +95,6 @@ vim.diagnostic.config({
   },
 })
 
-
----
--- Snippet config
----
 
 require('luasnip').config.set_config({
     region_check_events = 'InsertEnter',
@@ -113,9 +110,7 @@ require('luasnip.loaders.from_vscode').lazy_load()
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 
 local cmp = require('cmp')
---local cmp_config = require('lsp-zero').defaults.cmp_config({})
 
---cmp.setup(cmp_config)
 cmp.setup({
      mapping = cmp.mapping.preset.insert({
         ["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
@@ -132,7 +127,6 @@ cmp.setup({
         {name = 'path'}, -- file system paths
         {name = 'luasnip'}, -- snippets
         {name = 'nvim_lua'},
-        
     },
     view = {
         entries = "custom",
@@ -141,13 +135,11 @@ cmp.setup({
     window = {
         completion = {
             border = 'double',
-            
         },
         documentation = {
             border = 'rounded',
             format = { 
             }
-            
         },
     },
     completion = {
@@ -159,10 +151,8 @@ cmp.setup({
             mode = 'symbol_text', -- show only symbol annotations
             maxwidth = 40, -- prevent the popup from showing more than provided characters
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead
-            
             before = function(entry, vim_item)
                 -- add customization before lspkind
-                
                 vim_item.menu = ({
                     buffer = "[Buff]",
                     nvim_lsp = "[LSP]",
@@ -189,4 +179,15 @@ cmp.setup({
 require('fidget').setup()
 
 lsp_zero.setup()
+
+--Rust analyzer bug [temporary fix]:
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+    local default_diagnostic_handler = vim.lsp.handlers[method]
+    vim.lsp.handlers[method] = function(err, result, context, config)
+        if err ~= nil and err.code == -32802 then
+            return
+        end
+        return default_diagnostic_handler(err, result, context, config)
+    end
+end
 

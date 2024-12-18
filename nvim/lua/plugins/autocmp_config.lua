@@ -1,6 +1,6 @@
 -- nvim-cmp setup
-local cmp = require 'cmp'
-local lspkind = require 'lspkind'
+local cmp = require('cmp')
+local lspkind = require('lspkind')
 
 require("luasnip/loaders/from_vscode").lazy_load()
 local luasnip = require 'luasnip'

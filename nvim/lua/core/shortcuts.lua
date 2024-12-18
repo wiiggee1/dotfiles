@@ -46,3 +46,5 @@ keybind("n", "<leader>bl", ":blast<CR>")
 
 -- Testing some new keybindings here: 
 keybind("n", "<leader>d", diagnostic.open_float)
+
+

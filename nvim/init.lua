@@ -13,7 +13,7 @@ require("plugins.lualine_config")
 require("plugins.autopairs")
 require("plugins.todo_comments")
 require("plugins.dap_config")
-require("plugins.rust_config")
+--require("plugins.rust_config")
 --require("custom.smart_window")
 require("plugins.linter_config")
 

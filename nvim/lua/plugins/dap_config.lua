@@ -1,4 +1,3 @@
-require("dapui").setup()
 require("neodev").setup({
     library = { plugins = { "nvim-dap-ui" }, types = true },
   })
@@ -6,89 +5,104 @@ require("neodev").setup({
 local dap, dapui = require("dap"), require("dapui")
 require('dap').set_log_level('DEBUG')
 require('dap').set_log_level('ERROR')
+require('dap').set_log_level('TRACE')
 
 
 dapui.setup()
 
+local function program()
+    local path = vim.fn.input({
+      prompt = 'Path to executable: ',
+      default = vim.fn.getcwd() .. '/',
+      completion = 'file'
+    })
+    print(vim.inspect(path))
+    return (path and path ~= "") and path or dap.ABORT
+end
+
+-- Check if openocd.gdb exists
+local function setup_openocd_gdb_args(adapter)
+    local gdb_file = vim.fn.getcwd() .. "/openocd.gdb"
+    if vim.fn.filereadable(gdb_file) == 1 then
+        table.insert(adapter.args, "-x")
+        table.insert(adapter.args, gdb_file)
+    end
+end
+
 
 dap.adapters.gdb = {
   type = "executable",
-  command = "arm-none-eabi-gdb",
-  --command = "gdb", 
+  command = "gdb",
   --args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
   --args = { "--interpreter=dap", "-q", "-x", "openocd.gdb" }
-  args = {"--interpreter=mi2", "-q", "-x", "openocd.gdb" }
-
+  args = { "--quiet", "--interpreter=dap", "--eval-command", "set print pretty on" }
 }
 
---if not dap.adapters then dap.adapters = {} end
---dap.adapters["probe-rs-debug"] = {
---  type = "server",
---  port = "${port}",
---  executable = {
---    command = vim.fn.expand "$HOME/.cargo/bin/probe-rs",
---    args = { "dap-server", "--port", "${port}" },
---  },
---}
+setup_openocd_gdb_args(dap.adapters.gdb)
+
+dap.adapters["gdb-arm"] = {
+  type = "executable",
+  command = "arm-none-eabi-gdb",
+  --args = { "--interpreter=dap", "--eval-command", "set print pretty on" }
+  --args = { "--interpreter=dap", "-q", "-x", "openocd.gdb" }
+  args = { "-q", "-i", "dap" }
+}
+
+setup_openocd_gdb_args(dap.adapters["gdb-arm"])
+
+if not dap.adapters then dap.adapters = {} end
+dap.adapters["probe-rs-debug"] = {
+    type = "server",
+    port = "${port}",
+    executable = {
+        command = vim.fn.expand "$HOME/.cargo/bin/probe-rs",
+        args = { "dap-server", "--port", "${port}" },
+    },
+}
 
 dap.configurations.rust = {
     {
-        name = "Launch",
+        name = "gdb: Launch",
         type = "gdb",
         request = "launch",
-        program = function ()
-            return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = "${workspaceFolder}",
-        --stopAtBeginningOfMainSubprogram = false, 
-        stopOnEntry = false,
+        program = program,
+        cwd = '${workspaceFolder}',
+        target = "localhost:3333",  -- OpenOCD's GDB server port
+        runInTerminal = false,
     },
     {
-    name = "Select and attach to process",
-    type = "gdb",
-    request = "attach",
-    program = function()
-       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
-    pid = function()
-       local name = vim.fn.input('Executable name (filter): ')
-       return require("dap.utils").pick_process({ filter = name })
-    end,
-    cwd = '${workspaceFolder}'
-  },
+      name = "gdb-arm: Launch",
+      type = "gdb-arm",
+      request = "launch",
+      program = program,
+      target = "localhost:3333",
+      cwd = '${workspaceFolder}',
+      runInTerminal = false,
+    },
+    {
+      name = "gdb-arm: Attach target",
+      type = "gdb-arm",
+      request = "attach",
+      --program = program,
+      program = "/home/wiiggee1/Desktop/School/D7020E/lp_2024/d7020e_lab1/target/thumbv7em-none-eabi/debug/examples/rtt_stack",
+      target = "localhost:3333",
+      cwd = '${workspaceFolder}',
+    },
   {
-    name = 'Attach to gdbserver :3333',
+    name = 'gdbserver: attach',
     type = 'gdb',
     request = 'attach',
+    program = program,
     target = 'localhost:3333',
-    program = function()
-       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-    end,
     cwd = '${workspaceFolder}',
-    stopAtBeginningOfMainSubprogram = false,
+    --stopAtBeginningOfMainSubprogram = false,
     --stopOnEntry = false,
   },
 }
 
 dap.configurations.cpp = dap.configurations.rust
 
-
---[[
-dapui.setup({
-icons = {
-        disconnect = "",
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_into = "",
-        step_out = "",
-        step_over = "",
-        terminate = ""
-      }
-})
-]]
-
+--dapui.setup()
 
 
 --dap.configurations.cpp = {
@@ -112,6 +126,10 @@ vim.keymap.set("n", "<Leader>dc", ':lua require"dap".continue()<CR>', {noremap=t
 vim.keymap.set("n", "<Leader>du", ':lua require"dap".step_over()<CR>', {noremap=true})
 vim.keymap.set("n", "<Leader>di", ':lua require"dap".step_into()<CR>', {noremap=true})
 vim.keymap.set("n", "<Leader>do", ':lua require"dap".step_out()<CR>', {noremap=true})
+vim.keymap.set("n", "<Leader>sb", ':lua require"dap".step_back()<CR>', {noremap=true})
+vim.keymap.set("n", "<Leader>dp", ':lua require"dap".pause()<CR>', {noremap=true})
+vim.keymap.set("n", "<Leader>dq", ':lua require"dap".disconnect()<CR>', {noremap=true})
+
 vim.keymap.set("n", "<Leader>dr", ':lua require"dap".repl.toggle()<CR>', {noremap=true})
 vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
 vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
@@ -121,6 +139,7 @@ vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
       require('dap.ui.widgets').preview()
     end)
 
+--print(vim.inspect(dap.adapters))    
 --print(vim.inspect(dap.configurations))
 
 
@@ -138,21 +157,26 @@ local function stop_openocd()
   os.execute("pkill openocd")
 end
 
-dap.listeners.before.attach.dapui_config = function()
-    --start_openocd()
-    dapui.open()
+dap.listeners.after.event_initialized["dapui_config"] = function()
+      dapui.open()
 end
-dap.listeners.before.launch.dapui_config = function()
-    --start_openocd()
-    dapui.open()
-end
+
+-- dap.listeners.before.attach.dapui_config = function()
+--     --start_openocd()
+--     dapui.open()
+-- end
+-- dap.listeners.before.launch.dapui_config = function()
+--     --start_openocd()
+--     dapui.open()
+-- end
+
 dap.listeners.before.event_terminated.dapui_config = function()
-    dapui.close()
-    --stop_openocd()
+     dapui.close()
+--     --stop_openocd()
 end
-dap.listeners.before.event_exited.dapui_config = function()
-    dapui.close()
-    --stop_openocd()
-end
+-- dap.listeners.before.event_exited.dapui_config = function()
+--     dapui.close()
+--     --stop_openocd()
+-- end
 
 
