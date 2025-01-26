@@ -42,6 +42,8 @@ require('lspconfig').rust_analyzer.setup({
     }
 })
 
+require 'lspconfig'.zls.setup{}
+
 require('lspconfig').lua_ls.setup{}
 
 require('lspconfig').clangd.setup{
@@ -65,7 +67,7 @@ lsp_zero.set_sign_icons({
 
 require('mason').setup({})
 require('mason-lspconfig').setup({
-    ensure_installed = {'rust_analyzer', 'clangd', 'lua_ls', 'bashls', 'ts_ls'},
+    ensure_installed = {'rust_analyzer', 'clangd', 'lua_ls', 'bashls', 'ts_ls', 'zls'},
     handlers = {
         lsp_zero.default_setup,
 
