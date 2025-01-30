@@ -21,7 +21,7 @@ vim.opt.showcmd = true
 vim.opt.cmdheight = 1
 vim.opt.smarttab = true
 vim.opt.breakindent = true
-
+vim.opt.mouse = "n"
 
 -- Cursor settings
 set.cursorline = true
