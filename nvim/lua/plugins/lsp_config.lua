@@ -43,6 +43,8 @@ require('lspconfig').rust_analyzer.setup({
 })
 
 require 'lspconfig'.zls.setup({
+    capabilities = capabilities,
+    on_attach = lsp_attach,
     root_dir = require("lspconfig.util").root_pattern(".git", "build.zig", "zls.json"),
     settings = {
         zls = {

@@ -16,7 +16,7 @@ require("plugins.dap_config")
 --require("plugins.rust_config")
 --require("custom.smart_window")
 require("plugins.linter_config")
-require("plugins.java")
+--require("plugins.java")
 require("plugins.fidget_config")
 
 
