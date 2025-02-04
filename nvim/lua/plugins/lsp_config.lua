@@ -66,6 +66,8 @@ require('lspconfig').clangd.setup{
     }
 }
 
+require('lspconfig').neocmake.setup({})
+
 require('lspconfig').jdtls.setup({})
 
 lsp_zero.set_sign_icons({

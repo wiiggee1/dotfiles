@@ -10,6 +10,7 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
+export IDF_PATH="$HOME/esp/esp-idf"
 alias zig-xtensa="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
 
 # Set name of the theme to load --- if set to "random", it will
@@ -123,3 +124,6 @@ source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 . "$HOME/.cargo/env"
+
+# Created by `pipx` on 2025-02-04 15:18:55
+export PATH="$PATH:/home/wiiggee1/.local/bin"
