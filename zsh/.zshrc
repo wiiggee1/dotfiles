@@ -10,8 +10,11 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export IDF_PATH="$HOME/esp/esp-idf"
+export IDF_PATH="$HOME/esp-idf"
+export ZIG_XTENSA="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
 alias zig-xtensa="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
+alias zig-0.12-xtensa="$HOME/zig_versions/zig-espressif-bootstrap-0.14.0-xtensa-dev/out/zig-native-linux-gnu-baseline/zig"
+alias get_idf='. $HOME/esp-idf/export.sh'
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,

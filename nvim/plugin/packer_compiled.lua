@@ -248,7 +248,7 @@ _G.packer_plugins = {
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
   ["trouble.nvim"] = {
-    config = { "\27LJ\2\n®\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nsigns\1\0\4\fwarning\twarn\16information\tinfo\nerror\nerror\thint\thint\1\0\r\vheight\3\n\nsigns\0\17indent_lines\2\25use_diagnostic_signs\1\16fold_closed\6>\14fold_open\6v\17auto_preview\2\18cycle_results\2\fpadding\2\tmode\26workspace_diagnostics\nicons\1\15auto_close\1\14auto_open\1\nsetup\ftrouble\frequire\0" },
+    config = { "\27LJ\2\n®\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nsigns\1\0\4\fwarning\twarn\nerror\nerror\16information\tinfo\thint\thint\1\0\r\25use_diagnostic_signs\1\nsigns\0\17indent_lines\2\16fold_closed\6>\14fold_open\6v\17auto_preview\2\18cycle_results\2\fpadding\2\nicons\1\15auto_close\1\14auto_open\1\vheight\3\n\tmode\26workspace_diagnostics\nsetup\ftrouble\frequire\0" },
     loaded = true,
     path = "/home/wiiggee1/.local/share/nvim/site/pack/packer/start/trouble.nvim",
     url = "https://github.com/folke/trouble.nvim"
@@ -256,14 +256,14 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: trouble.nvim
-time([[Config for trouble.nvim]], true)
-try_loadstring("\27LJ\2\n®\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nsigns\1\0\4\fwarning\twarn\16information\tinfo\nerror\nerror\thint\thint\1\0\r\vheight\3\n\nsigns\0\17indent_lines\2\25use_diagnostic_signs\1\16fold_closed\6>\14fold_open\6v\17auto_preview\2\18cycle_results\2\fpadding\2\tmode\26workspace_diagnostics\nicons\1\15auto_close\1\14auto_open\1\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
-time([[Config for trouble.nvim]], false)
 -- Config for: nvim-autopairs
 time([[Config for nvim-autopairs]], true)
 try_loadstring("\27LJ\2\n@\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\19nvim-autopairs\frequire\0", "config", "nvim-autopairs")
 time([[Config for nvim-autopairs]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n®\2\0\0\4\0\6\0\t6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0005\3\4\0=\3\5\2B\0\2\1K\0\1\0\nsigns\1\0\4\fwarning\twarn\nerror\nerror\16information\tinfo\thint\thint\1\0\r\25use_diagnostic_signs\1\nsigns\0\17indent_lines\2\16fold_closed\6>\14fold_open\6v\17auto_preview\2\18cycle_results\2\fpadding\2\nicons\1\15auto_close\1\14auto_open\1\vheight\3\n\tmode\26workspace_diagnostics\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
 -- Load plugins in order defined by `after`
 time([[Sequenced loading]], true)
 vim.cmd [[ packadd nvim-treesitter ]]

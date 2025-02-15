@@ -42,18 +42,25 @@ require('lspconfig').rust_analyzer.setup({
     }
 })
 
-require 'lspconfig'.zls.setup({
+require('lspconfig').zls.setup({
     capabilities = capabilities,
-    on_attach = lsp_attach,
+    --on_attach = lsp_attach,
     root_dir = require("lspconfig.util").root_pattern(".git", "build.zig", "zls.json"),
+    cmd = {'/home/wiiggee1/zls/zig-out/bin/zls'},
     settings = {
         zls = {
             enable_inlay_hints = true,
             enable_snippets = true,
             warn_style = true,
+            enable_build_on_save = true,
+            zig_lib_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/lib/",
+            zig_exe_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig",
+            -- cmd = {'/home/wiiggee1/zls/zig-out/bin/zls'},
+            --cmd = { '/usr/bin/zls' },
         },
     },
 })
+
 
 require('lspconfig').lua_ls.setup{}
 
@@ -61,9 +68,9 @@ require('lspconfig').clangd.setup{
     cmd = {
        "clangd",
        "--clang-tidy",
-		"--background-index",
 		"--completion-style=detailed",
-    }
+    },
+    filetypes = {'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto'},
 }
 
 require('lspconfig').neocmake.setup({})
