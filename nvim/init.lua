@@ -18,5 +18,6 @@ require("plugins.dap_config")
 require("plugins.linter_config")
 --require("plugins.java")
 require("plugins.fidget_config")
+require("plugins.telescope")
 
 

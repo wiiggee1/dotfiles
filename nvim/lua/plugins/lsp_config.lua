@@ -42,9 +42,12 @@ require('lspconfig').rust_analyzer.setup({
     }
 })
 
+vim.g.zig_fmt_parse_errors = 0
+vim.g.zig_fmt_autosave = 0
+
 require('lspconfig').zls.setup({
     capabilities = capabilities,
-    --on_attach = lsp_attach,
+    on_attach = lsp_attach,
     root_dir = require("lspconfig.util").root_pattern(".git", "build.zig", "zls.json"),
     cmd = {'/home/wiiggee1/zls/zig-out/bin/zls'},
     settings = {
@@ -52,7 +55,9 @@ require('lspconfig').zls.setup({
             enable_inlay_hints = true,
             enable_snippets = true,
             warn_style = true,
+            semantic_tokens = "full",
             enable_build_on_save = true,
+            -- build_on_save_step = "check",
             zig_lib_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/lib/",
             zig_exe_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig",
             -- cmd = {'/home/wiiggee1/zls/zig-out/bin/zls'},
@@ -107,7 +112,10 @@ require('mason-lspconfig').setup({
 vim.diagnostic.config({
   underline = true,
   virtual_text = false,
-  severity_sort = false,
+  -- virtual_text = {
+  --     spacing = 2,
+  -- },
+  severity_sort = true,
   float = {
     style = 'minimal',
     border = 'rounded',
