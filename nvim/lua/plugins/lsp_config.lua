@@ -45,6 +45,7 @@ require('lspconfig').rust_analyzer.setup({
 vim.g.zig_fmt_parse_errors = 0
 vim.g.zig_fmt_autosave = 0
 
+
 require('lspconfig').zls.setup({
     capabilities = capabilities,
     on_attach = lsp_attach,
@@ -138,7 +139,6 @@ require('luasnip.loaders.from_vscode').lazy_load()
 ---
 
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-
 local cmp = require('cmp')
 
 cmp.setup({
