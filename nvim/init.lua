@@ -4,7 +4,6 @@ require 'core.colorscheme'
 --require("core.autocmds")
 require("plugins.file_explorer_view")
 require("core.shortcuts")
-require("plugins.show_terminal")
 require("plugins.tree_sitter")
 require("plugins.lsp_config")
 --require("plugins.autocmp_config")

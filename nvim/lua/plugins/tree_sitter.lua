@@ -14,7 +14,7 @@ require'nvim-treesitter.configs'.setup {
     -- `false` will disable the whole extension
     enable = true,
     use_languagetree = true,
-  
+    -- disable = { "latex" },
   indent = {
       enable = true,
     },

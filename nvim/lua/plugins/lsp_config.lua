@@ -67,6 +67,7 @@ require('lspconfig').zls.setup({
     },
 })
 
+require('lspconfig').texlab.setup{}
 
 require('lspconfig').lua_ls.setup{}
 

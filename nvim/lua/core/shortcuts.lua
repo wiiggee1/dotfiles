@@ -42,9 +42,29 @@ keybind("t", "<C-t>", ("exit<CR>"))
 keybind("n", "<leader>gn", ":bnext<CR>")
 keybind("n", "<leader>gb", ":bprevious<CR>")
 keybind("n", "<leader>bf", ":bfirst<CR>")
-keybind("n", "<leader>bl", ":blast<CR>") 
+keybind("n", "<leader>bl", ":blast<CR>")
 
--- Testing some new keybindings here: 
+-- Window Pane Navigation: 
+-- <C-w>h = Left window
+-- <C-w>l = Right window
+-- <C-w>k = Up window
+-- <C-w>j = Down window
+keybind("n", "<leader>sv", ":vsplit<CR>") -- Vertical window split. 
+keybind("n", "<leader>sh", ":split<CR>") -- Horizontal split.
+
+
+-- Diagnostic keybinding: 
 keybind("n", "<leader>d", diagnostic.open_float)
+keybind("n", "<leader>dj", function ()
+    diagnostic.jump({count = 1, float = true})
+end)
+keybind("n", "<leader>dk", function ()
+    diagnostic.jump({count = -1, float = true})
+end)
+
+-- Markdown keybindings: 
+keybind("n", "<leader>mp", ":MarkdownPreviewToggle<CR>")
+
+
 
 

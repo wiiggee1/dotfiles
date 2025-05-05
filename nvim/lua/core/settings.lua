@@ -36,6 +36,7 @@ vim.api.nvim_set_keymap('n', '<Left>', "<C-o>: echo 'Left arrow key disabled'<CR
 vim.api.nvim_set_keymap('n', '<Right>', "<C-o>: echo 'Right arrow key disabled'<CR>", {noremap = true, silent = false })
 
 -- To navigate in the lsp.buf window use: CTRL + j - DOWN and CTRL + k for UP. 
+-- Pressing "A" would move to the end of the line. 
 
 -- Cursor settings
 set.cursorline = true

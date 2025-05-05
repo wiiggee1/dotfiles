@@ -61,6 +61,40 @@ return require('packer').startup(function(use)
     use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"} }
     --use 'theHamsta/nvim-dap-virtual-text'
 
+    -- Markdown plugin. 
+    use({
+        'MeanderingProgrammer/render-markdown.nvim',
+        after = { 'nvim-treesitter' },
+        requires = { 'echasnovski/mini.nvim', opt = true }, -- if you use the mini.nvim suite
+        -- requires = { 'echasnovski/mini.icons', opt = true }, -- if you use standalone mini plugins
+        -- requires = { 'nvim-tree/nvim-web-devicons', opt = true }, -- if you prefer nvim-web-devicons
+        config = function()
+            require('render-markdown').setup({})
+        end,
+    })
+
+    use({ "iamcco/markdown-preview.nvim", run = "cd app && npm install", setup = function() vim.g.mkdp_filetypes = { "markdown" } end, ft = { "markdown" }, })
+    -- use({
+    --     "iamcco/markdown-preview.nvim",
+    --     run = function() vim.fn["mkdp#util#install"]() end,
+    -- })
+
+
+    -- LaTeX syntax plugin
+    -- use({
+    --     'lervag/vimtex',
+    --     init = function()
+    --         -- VimTeX configuration goes here, e.g.
+    --             vim.g.vimtex_view_method = "zathura"
+    --             vim.g.vimtex_view_general_viewer = 'okular'
+    --             vim.g.vimtex_indent_enabled = false
+    --             vim.g.tex_indent_items = false
+    --             vim.g.tex_indent_brace = false
+    --             vim.g.tex_flavor = 'latex'
+    --             vim.g.vimtex_mappings_enabled = false
+    --     end,
+    -- })
+
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.8',
         -- or                            , branch = '0.1.x',
@@ -72,10 +106,16 @@ return require('packer').startup(function(use)
     }
     use 'windwp/nvim-ts-autotag'
 
-    use('akinsho/toggleterm.nvim')
+    use {"akinsho/toggleterm.nvim",
+        tag = '*',
+        config = function() require("toggleterm").setup({
+            shade_terminals = true
+        }) end
+    }
+    -- use('akinsho/toggleterm.nvim')
     use('akinsho/nvim-bufferline.lua')
     use('nvim-lualine/lualine.nvim')
-    use('kyazdani42/nvim-web-devicons')  
+    use('kyazdani42/nvim-web-devicons')
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {'nvim-tree/nvim-web-devicons'}
