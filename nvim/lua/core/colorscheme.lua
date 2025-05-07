@@ -29,7 +29,6 @@ require("catppuccin").setup({
         operators = {},
     },
     color_overrides = {},
-            
     custom_highlights = {},
     integrations = {
         cmp = true,

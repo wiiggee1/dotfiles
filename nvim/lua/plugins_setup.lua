@@ -26,11 +26,11 @@ return require('packer').startup(function(use)
       "folke/trouble.nvim",
       config = function()
           require("trouble").setup {
-              height = 10, 
+              height = 10,
               icons = false,
               mode = "workspace_diagnostics",
               padding = true, -- add an extra new line on top of the list
-              cycle_results = true, 
+              cycle_results = true,
               auto_preview = true,
               -- your configuration comes here
               -- or leave it empty to use the default settings
@@ -39,7 +39,7 @@ return require('packer').startup(function(use)
               fold_closed = ">", -- icon used for closed folds
             indent_lines = true, -- add an indent guide below the fold icons
             signs = {
-        -- icons / text used for a diagnostic
+                -- icons / text used for a diagnostic
                 error = "error",
                 warning = "warn",
                 hint = "hint",
@@ -143,7 +143,7 @@ return require('packer').startup(function(use)
 		  -- LSP Support
 		  {'neovim/nvim-lspconfig'},
 		  {
-              'williamboman/mason.nvim', 
+              'williamboman/mason.nvim',
               run = function()
                   pcall(vim.cmd, 'MasonUpdate')
               end, 
