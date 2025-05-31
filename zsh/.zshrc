@@ -12,6 +12,7 @@ fi
 export ZSH="$HOME/.oh-my-zsh"
 export IDF_PATH="$HOME/esp-idf"
 export ZIG_XTENSA="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
+
 alias zig-xtensa="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
 alias zig-0.12-xtensa="$HOME/zig_versions/zig-espressif-bootstrap-0.14.0-xtensa-dev/out/zig-native-linux-gnu-baseline/zig"
 alias get_idf='. $HOME/esp-idf/export.sh'
@@ -130,3 +131,4 @@ source $ZSH/oh-my-zsh.sh
 
 # Created by `pipx` on 2025-02-04 15:18:55
 export PATH="$PATH:/home/wiiggee1/.local/bin"
+export PATH="$HOME/zig_versions/zig-linux-x86_64-0.14.0:$PATH"

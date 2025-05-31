@@ -51,7 +51,7 @@ keybind("n", "<leader>bl", ":blast<CR>")
 -- <C-w>j = Down window
 keybind("n", "<leader>sv", ":vsplit<CR>") -- Vertical window split. 
 keybind("n", "<leader>sh", ":split<CR>") -- Horizontal split.
-
+-- keybind('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
 
 -- Diagnostic keybinding: 
 keybind("n", "<leader>d", diagnostic.open_float)
@@ -65,6 +65,24 @@ end)
 -- Markdown keybindings: 
 keybind("n", "<leader>mp", ":MarkdownPreviewToggle<CR>")
 
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'LSP actions',
+    callback = function(event)
+    local opts = {buffer = event.buf}
 
+    -- these will be buffer-local keybindings
+    -- because they only work if you have an active language server
+
+    keybind('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+    keybind('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+    keybind('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>', opts)
+    keybind('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>', opts)
+    keybind('n', 'go', '<cmd>lua vim.lsp.buf.type_definition()<cr>', opts)
+    keybind('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+    keybind('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<cr>', opts)
+    keybind('n', '<F2>', '<cmd>lua vim.lsp.buf.rename()<cr>', opts)
+    keybind('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>', opts)
+  end
+})
 
 

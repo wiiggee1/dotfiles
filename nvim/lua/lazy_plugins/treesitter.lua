@@ -1,13 +1,12 @@
 return {
     {
        'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate',
-        lazy = vim.fn.argc(-1) == 0,
+        lazy = true,
+        build = ":TSUpdate",
 
         config = function ()
-            require 'nvim-treesitter.install'.prefer_git = false
-            require 'nvim-treesitter.install'.compilers = { "clang", "gcc" }
-            require('nvim-treesitter.configs').setup {
+            require("nvim-treesitter.install").prefer_git = true
+            require('nvim-treesitter.configs').setup ({
                 -- A list of parser names, or "all"
                 ensure_installed = {
                     "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "rust", "javascript", "cpp", "c_sharp", "html", "python", "go", "zig",
@@ -38,15 +37,26 @@ return {
                     -- Instead of true it can also be a list of languages
                     additional_vim_regex_highlighting = { "markdown" },
                 },
+            })
+            local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+            treesitter_parser_config.templ = {
+                install_info = {
+                    url = "https://github.com/vrischmann/tree-sitter-templ.git",
+                    files = {"src/parser.c", "src/scanner.c"},
+                    branch = "master",
+                },
             }
+            vim.treesitter.language.register("templ", "templ")
         end
     },
 
     -- {
     --     "nvim-treesitter/nvim-treesitter-textobjects",
     --     after = "nvim-treesitter",
-    --     dependencies = "nvim-treesitter/nvim-treesitter",
-    --
+    --     -- dependencies = "nvim-treesitter/nvim-treesitter",
+    --     config = function ()
+    --         require('config.treesitter-textobjects').setup({})
+    --     end
     -- },
 
     {

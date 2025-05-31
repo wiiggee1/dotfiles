@@ -55,8 +55,8 @@ return {
                                     semantic_tokens = "full",
                                     enable_build_on_save = true,
                                     -- build_on_save_step = "check",
-                                    zig_lib_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/lib/",
-                                    zig_exe_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig",
+                                    -- zig_lib_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/lib/",
+                                    -- zig_exe_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig",
                                     --cmd = { '/usr/bin/zls' },
                                 },
                             },
@@ -193,5 +193,4 @@ return {
                 },
         })
         end
-
 }
