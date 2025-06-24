@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "verilator": "^0.1.0"
+  }
+}

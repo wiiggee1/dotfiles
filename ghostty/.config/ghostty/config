@@ -1,0 +1,12 @@
+shell-integration = zsh
+theme = catppuccin-mocha
+# Default background #303446
+#background = #787e9c
+#background = #2b3047
+background-opacity = 0.85
+background-blur-radius = 20
+
+font-family = JetBrainsMonoNLNerdFont 
+font-size = 13.0
+mouse-hide-while-typing = true
+
