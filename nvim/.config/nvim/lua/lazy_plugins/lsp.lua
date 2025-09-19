@@ -1,9 +1,13 @@
 return {
 		"neovim/nvim-lspconfig",
+        event = {"BufReadPre", "BufNewFile"},
 	    dependencies = {
 		  -- LSP Support
             'williamboman/mason.nvim',
 		    'williamboman/mason-lspconfig.nvim',
+
+            "folke/neodev.nvim",
+            "saghen/blink.cmp",
 
 		  -- Autocompletion
 		    'hrsh7th/nvim-cmp',
@@ -21,46 +25,56 @@ return {
 	    },
 
         config = function ()
-            local lspconfutil = require('lspconfig/util')
-            local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
-            local default_capabilities = require('cmp_nvim_lsp').default_capabilities()
             local cmp = require('cmp')
-            local cmp_lsp = require("cmp_nvim_lsp")
+            -- local cmp_lsp = require("cmp_nvim_lsp")
             local lsp_config = require('lspconfig')
+            local default_capabilities = require('cmp_nvim_lsp').default_capabilities()
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-            require("fidget").setup({})
-            require('mason').setup({})
+            local status_flag, blink = pcall(require, "blink.cmp")
+            if status_flag then
+                capabilities = vim.tbl_deep_extend(
+                    "force",
+                    capabilities,
+                    blink.get_lsp_capabilities()
+                    -- require("cmp_nvim_lsp").default_capabilities()
+                )
+            end
+
+            require("fidget").setup()
+            require('mason').setup()
             require('mason-lspconfig').setup({
-                ensure_installed = {'rust_analyzer', 'clangd', 'lua_ls', 'bashls', 'ts_ls', 'zls'},
+                ensure_installed = {'rust_analyzer', 'clangd', 'lua_ls', 'bashls', 'ts_ls', 'zls', 'texlab'},
                 handlers = {
                     -- ===HOW TO ADD===
-                    -- function(server_name) -- default handler (optional)
-                    --     require("lspconfig")[server_name].setup {
-                    --         capabilities = capabilities
-                    --     }
-                    -- end,
+                    function(server_name) -- default handler (optional)
+                        require("lspconfig")[server_name].setup {
+                            capabilities = capabilities
+                        }
+                    end,
 
                     zls = function()
-                        -- local lspconfig = require("lspconfig")
                         lsp_config.zls.setup({
+                            capabilities = capabilities,
+                            -- filetypes = { "zig", "zon" },
+                            -- cmd = vim.fn.expand("~/zls/zig-out/bin/zls"),
                             -- cmd = {"zls"},
-                            cmd = {'/home/wiiggee1/zls/zig-out/bin/zls'},
-                            capabilities = default_capabilities,
-                            filetypes = { "zig", "zir" },
+                            workspace_required = false,
                             root_dir = lsp_config.util.root_pattern(".git", "build.zig", "zls.json"),
-                            single_file_support = true,
 
                             settings = {
                                 zls = {
                                     enable_inlay_hints = true,
                                     enable_snippets = true,
-                                    warn_style = true,
-                                    semantic_tokens = "partial",
+                                    -- warn_style = true,
+                                    -- enable_argument_placeholders = false,
+                                    -- semantic_tokens = "full",
+                                    semantic_tokens = "full",
                                     enable_build_on_save = true,
                                     build_on_save_step = "check",
-                                    -- zig_lib_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/lib/",
-                                    -- zig_exe_path = "/home/wiiggee1/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig",
-                                    --cmd = { '/usr/bin/zls' },
+                                    -- -freference-trace=10
+                                    -- build_on_save_args = {"check", "fincremental"},
+                                    build_on_save_args = {"check", "fincremental", "-freference-trace=10"},
                                 },
                             },
                         })
@@ -106,15 +120,37 @@ return {
                             single_file_support = true,
                         })
                     end,
+
+                    texlab = function ()
+                        local executable = 'zathura'
+                        local args = {
+                            '--synctex-editor-command',
+                            [[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]] .. vim.v.servername,
+                            '--synctex-forward',
+                            '%l:1:%f',
+                            '%p',
+                        }
+                        require('lspconfig').texlab.setup({
+                        capabilities = default_capabilities,
+                        setting = {
+                            texlab = {
+                                forwardSearch = {
+                                    executable = executable,
+                                    args = args,
+                                },
+                            },
+                        },
+                    })
+                    end,
                 },
             })
             -- DIAGNOSTIC CONFIGURATION: 
             vim.diagnostic.config({
                 underline = true,
-                virtual_text = false,
-                -- virtual_text = {
-                --     spacing = 2,
-                -- },
+                -- virtual_text = false,
+                virtual_text = {
+                    spacing = 2,
+                },
                 severity_sort = true,
                 float = {
                     style = 'minimal',

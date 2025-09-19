@@ -1,6 +1,6 @@
 if [[ -o interactive ]]; then
   # fastfetch   
-  fastfetch --load-config ~/.config/fastfetch/config.jsonc
+  fastfetch --config ~/.config/fastfetch/config.jsonc
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -15,14 +15,15 @@ fi
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-export IDF_PATH="$HOME/esp-idf"
-export ZIG_XTENSA="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
-export PATH="$HOME/zls/zig-out/bin/zls:$PATH"
-# export PATH="$HOME/zig_versions/zig-linux-x86_64-0.14.0/zig:$PATH"
+export IDF_PATH="$HOME/esp/esp-idf"
+# export ZIG_XTENSA="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
+export PATH="$HOME/zig_versions/zig-x86_64-linux-0.15.1:$PATH"
+export PATH="$HOME/zls/zig-out/bin:$PATH"
 
-alias zig-xtensa="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
-alias zig-0.12-xtensa="$HOME/zig_versions/zig-espressif-bootstrap-0.14.0-xtensa-dev/out/zig-native-linux-gnu-baseline/zig"
-alias get_idf='. $HOME/esp-idf/export.sh'
+# alias zig-xtensa="$HOME/zig_versions/zig-relsafe-espressif-x86_64-linux-musl-baseline/zig"
+# alias zig-0.12-xtensa="$HOME/zig_versions/zig-espressif-bootstrap-0.14.0-xtensa-dev/out/zig-native-linux-gnu-baseline/zig"
+
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,

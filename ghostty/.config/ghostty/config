@@ -1,12 +1,20 @@
 shell-integration = zsh
-theme = catppuccin-mocha
+# theme = catppuccin-macchiato
+# theme = catppuccin-mocha
+# theme = catppuccin-frappe
+theme = Catppuccin Frappe
 # Default background #303446
 #background = #787e9c
 #background = #2b3047
-background-opacity = 0.85
+background-opacity = 0.80
 background-blur-radius = 20
 
 font-family = JetBrainsMonoNLNerdFont 
 font-size = 13.0
 mouse-hide-while-typing = true
 
+keybind = ctrl+alt+k=goto_split:up
+keybind = ctrl+alt+j=goto_split:down
+keybind = ctrl+alt+h=goto_split:left
+keybind = ctrl+alt+l=goto_split:right
+keybind = ctrl+alt+q=close_window
