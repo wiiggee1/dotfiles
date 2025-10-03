@@ -4,16 +4,17 @@ return{
         event = "InsertEnter",
         -- use opts = {} for passing setup options
         -- this is equivalent to setup({}) function
+        config = true
 
-        config = function()
-            local npairs = require("nvim-autopairs")
-            local Rule = require('nvim-autopairs.rule')
-            npairs.enable()
-            npairs.setup({
-                check_ts = true,
-                ts_config = {
-                }
-            })
-        end
+        -- config = function()
+        --     local npairs = require("nvim-autopairs")
+        --     local Rule = require('nvim-autopairs.rule')
+        --     npairs.enable()
+        --     npairs.setup({
+        --         check_ts = true,
+        --         ts_config = {
+        --         }
+        --     })
+        -- end
     }
 }
