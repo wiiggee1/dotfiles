@@ -1,8 +1,7 @@
 shell-integration = zsh
-# theme = catppuccin-macchiato
-# theme = catppuccin-mocha
-# theme = catppuccin-frappe
+shell-integration-features = cursor,sudo,title
 theme = Catppuccin Frappe
+
 # Default background #303446
 #background = #787e9c
 #background = #2b3047
@@ -12,6 +11,8 @@ background-blur-radius = 20
 font-family = JetBrainsMonoNLNerdFont 
 font-size = 13.0
 mouse-hide-while-typing = true
+gtk-single-instance = false
+env = GTK_IM_MODULE=ibus ghostty
 
 keybind = ctrl+alt+k=goto_split:up
 keybind = ctrl+alt+j=goto_split:down

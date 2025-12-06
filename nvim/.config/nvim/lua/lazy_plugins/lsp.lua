@@ -127,6 +127,7 @@ return {
                         }
                 },
                 bashls = true,
+                jupytext = true,
 
                 -- vim.lsp.config("texlab", {
                 texlab = {
@@ -250,6 +251,8 @@ return {
                     {name = 'path'}, -- file system paths
                     {name = 'luasnip'}, -- snippets
                     {name = 'nvim_lua'},
+                    {name = 'neopyter'},
+                    {name = 'otter'},
                 }),
                 view = {
                     entries = "custom",
@@ -281,6 +284,7 @@ return {
                                 luasnip = "[LuaSnip]",
                                 nvim_lua = "[Lua]",
                                 latex_symbols = "[Latex]",
+                                neopyter = "[NeoPyter]",
                             })[entry.source.name]
 
                             vim_item.dup = { buffer = 1, path = 1, nvim_lsp = 0 }

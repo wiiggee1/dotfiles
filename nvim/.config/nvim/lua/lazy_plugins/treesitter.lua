@@ -9,7 +9,29 @@ return {
             require('nvim-treesitter.configs').setup ({
                 -- A list of parser names, or "all"
                 ensure_installed = {
-                    "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "rust", "javascript", "cpp", "html", "python", "go", "zig",
+                    "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline",
+                    "rust", "javascript", "cpp", "html", "python", "go", "zig",
+                    "r", "latex",
+                },
+
+                textobjects = {
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                        keymaps = {
+                            ["aj"] = { query = "@cell", desc = "Select cell" },
+                            ["ij"] = { query = "@cellcontent", desc = "Select cell content" },
+                        },
+                    },
+                    move = {
+                        enable = true,
+                        goto_next_start = {
+                            ["]j"] = "@cellseparator",
+                        },
+                        goto_previous_start = {
+                            ["[j"] = "@cellseparator",
+                        },
+                    },
                 },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -50,15 +72,6 @@ return {
             vim.treesitter.language.register("templ", "templ")
         end
     },
-
-    -- {
-    --     "nvim-treesitter/nvim-treesitter-textobjects",
-    --     after = "nvim-treesitter",
-    --     -- dependencies = "nvim-treesitter/nvim-treesitter",
-    --     config = function ()
-    --         require('config.treesitter-textobjects').setup({})
-    --     end
-    -- },
 
     {
         "nvim-treesitter/nvim-treesitter-context",
